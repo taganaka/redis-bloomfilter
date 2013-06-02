@@ -1,6 +1,12 @@
 require "digest/sha1"
 class Redis
   module BloomfilterDriver
+
+    # It loads lua script into redis.
+    # BF implementation is done by lua scripting
+    # The alghoritm is executed directly on redis
+    # Credits for lua code goes to Erik Dubbelboer
+    # https://github.com/ErikDubbelboer/redis-lua-scaling-bloom-filter
     class Lua
       attr_accessor :redis
 
@@ -24,6 +30,9 @@ class Redis
       end
 
       protected
+        # It loads the script inside Redis
+        # Taken from https://github.com/ErikDubbelboer/redis-lua-scaling-bloom-filter
+        # This is a scalable implementation of BF. It means the initial size can vary
         def lua_load
           add_fnc = %q(
             local entries   = ARGV[1]
