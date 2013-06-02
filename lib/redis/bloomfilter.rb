@@ -56,9 +56,9 @@ class Redis
       @driver.insert data
     end
 
-    # It checks if a key or a set of keys are part of the set
-    def include?(*keys)
-      @driver.include?(*keys)
+    # It checks if a key is part of the set
+    def include?(key)
+      @driver.include?(key)
     end
 
     # It deletes a bloomfilter

@@ -14,21 +14,18 @@ class Redis
         end
       end
 
-      # It checks if a key or a set of keys are part of the set
-      def include?(*keys)
-        keys.each do |key|
-          indexes = []
-          indexes_for(key) { |idx| indexes << idx }
+      # It checks if a key is part of the set
+      def include?(key)
+        indexes = []
+        indexes_for(key) { |idx| indexes << idx }
 
-          return false if @redis.getbit(@options[:key_name], indexes.shift) == 0
+        return false if @redis.getbit(@options[:key_name], indexes.shift) == 0
 
-          result = @redis.pipelined do
-            indexes.each {|idx| @redis.getbit(@options[:key_name], idx)}
-          end
-
-          return false if result.include?(0)
+        result = @redis.pipelined do
+          indexes.each {|idx| @redis.getbit(@options[:key_name], idx)}
         end
-        true
+
+        !result.include?(0)
       end
 
       # It deletes a bloomfilter
