@@ -7,9 +7,12 @@ Gem::Specification.new do |s|
   s.version     = Redis::Bloomfilter::VERSION
   s.authors     = ["Francesco Laurita"]
   s.email       = ["francesco.laurita@gmail.com"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "https://github.com/taganaka/redis-bloomfilter"
+  s.summary     = %q{Distributed Bloom Filter implementation on Redis}
+  s.description = %q{
+    Adds Redis::Bloomfilter class which can be used as ditributed bloom filter implementation on Redis.
+    A Bloom filter is a space-efficient probabilistic data structure that is used to test whether an element is a member of a set.
+  }
 
   s.rubyforge_project = "redis-bloomfilter"
 
