@@ -1,4 +1,5 @@
 require "digest/md5"
+require "digest/sha1"
 require "zlib"
 class Redis
   module BloomfilterDriver
