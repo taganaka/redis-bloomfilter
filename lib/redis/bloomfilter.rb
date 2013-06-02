@@ -33,7 +33,6 @@ class Redis
       @redis = @options[:redis] || Redis.current
       @options[:hash_engine] = options[:hash_engine] if options[:hash_engine]
       driver_class = Redis::BloomfilterDriver.const_get(@options[:driver].downcase.gsub(/(\w+)/){|s|s.capitalize})
-      raise ArgumentError, "a driver with name #{@options[:driver]} is mot availabe" if driver_class.nil?
       @driver = driver_class.new @options
       @driver.redis = @redis 
     end

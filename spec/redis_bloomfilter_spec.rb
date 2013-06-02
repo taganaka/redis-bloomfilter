@@ -23,6 +23,7 @@ describe Redis::Bloomfilter do
     expect { Redis::Bloomfilter.new }.to raise_error(ArgumentError)
     expect { Redis::Bloomfilter.new :size => 123 }.to raise_error(ArgumentError)
     expect { Redis::Bloomfilter.new :error_rate => 0.01 }.to raise_error(ArgumentError)
+    expect { Redis::Bloomfilter.new :size => 123,:error_rate => 0.01, :driver => 'bibu' }.to raise_error(NameError)
   end
 
   it 'should create a Redis::Bloomfilter object' do
