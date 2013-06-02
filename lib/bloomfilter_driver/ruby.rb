@@ -1,3 +1,5 @@
+require "digest/md5"
+require "zlib"
 class Redis
   module BloomfilterDriver
     class Ruby
