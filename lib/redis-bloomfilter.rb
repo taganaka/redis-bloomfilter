@@ -1,2 +1,2 @@
 require "redis"
-require "redis-bloomfilter/bloomfilter"
+require "redis/bloomfilter"
