@@ -21,7 +21,8 @@ class Redis
         :error_rate   => 0.01,
         :key_name     => 'redis-bloomfilter',
         :hash_engine  => 'md5',
-        :redis        => Redis.current
+        :redis        => Redis.current,
+        :driver       => 'ruby'
       }.merge options
 
       raise ArgumentError, "options[:size] && options[:error_rate] cannot be nil" if options[:error_rate].nil? || options[:size].nil?
@@ -35,7 +36,9 @@ class Redis
 
       @redis = @options[:redis] || Redis.current
       @options[:hash_engine] = options[:hash_engine] if options[:hash_engine]
-      @driver = Redis::BloomfilterDriver::Ruby.new @options
+      driver_class = Redis::BloomfilterDriver.const_get(@options[:driver].downcase.gsub(/(\w+)/){|s|s.capitalize})
+      raise ArgumentError, "a driver with name #{@options[:driver]} is mot availabe" if driver_class.nil?
+      @driver = driver_class.new @options
       @driver.redis = @redis 
     end
 
