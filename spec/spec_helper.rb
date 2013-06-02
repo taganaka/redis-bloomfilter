@@ -15,3 +15,6 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 end
+
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require 'redis-bloomfilter'
