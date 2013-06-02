@@ -8,8 +8,8 @@ def rand_word(length = 8)
   @charset.shuffle.first(length).join
 end
 
-items = ARGV[0].to_i || 10_000
-puts "#{items}"  
+items = ARGV[0].nil? ? 10_000 : ARGV[0].to_i
+
 error_rate = 0.01
 bf = Redis::Bloomfilter.new(
   {
@@ -34,12 +34,12 @@ Benchmark.bm do |x|
       end
       visited << item
       bf.insert item
-      print ".(#{"%.1f" % ((i.to_f/items.to_f) * 100)}%) " if i % 1000 == 0
+      #print ".(#{"%.1f" % ((i.to_f/items.to_f) * 100)}%) " if i % 1000 == 0
     end
   end
 end
 
-puts "Bloomfilter no of Bits: #{bf.options[:bits]}"
+puts "Bloomfilter no of Bits: #{bf.options[:bits]} in Mb: #{(bf.options[:bits].to_f / 8 / 1024 / 1024)}"
 puts "Bloomfilter no of hashes used: #{bf.options[:hashes]}"
 puts "Items added: #{items}"
 puts "First error found at: #{first_error_at}"
