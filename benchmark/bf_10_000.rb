@@ -11,7 +11,7 @@ end
 items = ARGV[0].nil? ? 10_000 : ARGV[0].to_i
 error_rate = 0.01
 
-['lua', 'ruby'].each do |driver|
+['lua', 'ruby', 'ruby-test'].each do |driver|
   puts "Testing #{driver} driver..."
 
   bf = Redis::Bloomfilter.new(

@@ -41,8 +41,8 @@ describe Redis::Bloomfilter do
     bf.options[:key_name].should eq 'ossom'
     bf.clear
   end
-  
-  %w(ruby lua).each do |driver|
+
+  %w(ruby lua ruby-test).each do |driver|
     it 'should work' do
       bf = factory({:size => 1000, :error_rate => 0.01, :key_name => '__test_bf'},driver)
       bf.clear
@@ -53,7 +53,7 @@ describe Redis::Bloomfilter do
       bf.include?("asdlol").should be false
     end
 
-    it 'should honor the eror rate' do
+    it 'should honor the error rate' do
       bf = factory({:size => 100, :error_rate => 0.01, :key_name => '__test_bf'},driver)
       bf.clear
       e = test_error_rate bf, 180
