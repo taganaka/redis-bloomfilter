@@ -37,6 +37,7 @@ insert:  101.630000  16.610000 118.240000 (164.792045)
 include?: 96.440000  28.710000 125.150000 (191.021710)
 ```
 The lua version is ~3 times faster than the pure-Ruby version
+
 1.000.000 ~= 1.5Mb occuped on Redis
 
 Contributing to redis-bloomfilter
