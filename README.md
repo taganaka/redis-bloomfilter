@@ -16,6 +16,13 @@ Testing
     $ bundle install
     $ rake
 
+Drivers
+-----------------
+The library contains a set of different drivers.
+  * A pure Ruby implementation
+  * A server-side version based on lua available for Redis v > 2.6
+
+
 Contributing to redis-bloomfilter
 ----------------
  
