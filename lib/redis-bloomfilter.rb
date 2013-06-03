@@ -1,4 +1,5 @@
 require "redis"
+require "redis/connection/hiredis"
 require "redis/bloomfilter"
 require "bloomfilter_driver/ruby"
 require "bloomfilter_driver/lua"
