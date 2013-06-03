@@ -32,7 +32,7 @@ class Redis
 
       @redis = @options[:redis] || Redis.current
       @options[:hash_engine] = options[:hash_engine] if options[:hash_engine]
-      driver_class = Redis::BloomfilterDriver.const_get(@options[:driver].downcase.gsub(/(\w+)/){|s|s.capitalize})
+      driver_class = Redis::BloomfilterDriver.const_get(driver_name)
       @driver = driver_class.new @options
       @driver.redis = @redis 
     end
@@ -63,6 +63,11 @@ class Redis
     def clear
       @driver.clear
     end
+
+    protected
+      def driver_name
+        @options[:driver].downcase.split('-').collect{|t| t.gsub(/(\w+)/){|s|s.capitalize}}.join
+      end
 
   end
 end
