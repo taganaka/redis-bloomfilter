@@ -18,7 +18,7 @@ error_rate = 0.01
     {
       :size       => items, 
       :error_rate => error_rate, 
-      :key_name   => "bloom-filter-bench",
+      :key_name   => "bloom-filter-bench-#{driver}",
       :driver     => driver
     }
   )
@@ -27,7 +27,7 @@ error_rate = 0.01
   first_error_at = 0
   visited = Set.new
 
-  Benchmark.bm do |x| 
+  Benchmark.bm(7) do |x| 
     x.report do
       items.times do |i|
         item = rand_word
@@ -42,7 +42,7 @@ error_rate = 0.01
       end
     end
   end
-
+  bf.clear
   puts "Bloomfilter no of Bits: #{bf.options[:bits]} in Mb: #{(bf.options[:bits].to_f / 8 / 1024 / 1024)}"
   puts "Bloomfilter no of hashes used: #{bf.options[:hashes]}"
   puts "Items added: #{items}"
