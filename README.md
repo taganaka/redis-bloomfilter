@@ -22,6 +22,22 @@ The library contains a set of different drivers.
   * A pure Ruby implementation
   * A server-side version based on lua available for Redis v > 2.6
 
+Performance & Memory Usage
+-----------------
+```
+Benchmarking lua driver with 1000000 items
+              user     system      total        real
+insert:   36.590000  17.510000  54.100000 (191.411008)
+include?: 34.850000  16.520000  51.370000 (142.801983)
+
+---------------------------------------------
+Benchmarking ruby driver with 1000000 items
+              user     system      total        real
+insert:  101.630000  16.610000 118.240000 (164.792045)
+include?: 96.440000  28.710000 125.150000 (191.021710)
+```
+The lua version is ~3 times faster than the pure-Ruby version
+1.000.000 ~= 1.5Mb occuped on Redis
 
 Contributing to redis-bloomfilter
 ----------------
