@@ -60,6 +60,16 @@ describe Redis::Bloomfilter do
       e.should be < bf.options[:error_rate]
       bf.clear
     end
+
+    it 'should remove an elemnt from the filter' do 
+
+      bf = factory({:size => 100, :error_rate => 0.01, :key_name => '__test_bf'},driver)
+      bf.insert "asdlolol"
+      bf.include?("asdlolol").should be true
+      bf.remove "asdlolol"
+      bf.include?("asdlolol").should be false
+      
+    end
   end
 
 end

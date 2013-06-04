@@ -17,7 +17,11 @@ class Redis
       end
 
       def insert(data)
-        @redis.evalsha(@add_fnc_sha, :keys => [@options[:key_name]], :argv => [@options[:size], @options[:error_rate], data])
+        @redis.evalsha(@add_fnc_sha, :keys => [@options[:key_name]], :argv => [@options[:size], @options[:error_rate], data, 1])
+      end
+
+      def remove(data)
+        @redis.evalsha(@add_fnc_sha, :keys => [@options[:key_name]], :argv => [@options[:size], @options[:error_rate], data, 0])
       end
 
       def include?(key)
@@ -37,6 +41,7 @@ class Redis
           add_fnc = %q(
             local entries   = ARGV[1]
             local precision = ARGV[2]
+            local set_value = ARGV[4]
             local index     = math.ceil(redis.call('INCR', KEYS[1] .. ':count') / entries)
             local key       = KEYS[1] .. ':' .. index
             local bits = math.floor(-(entries * math.log(precision * math.pow(0.5, index))) / 0.480453013)
@@ -48,7 +53,7 @@ class Redis
             h[2] = tonumber(string.sub(hash, 16, 24), 16)
             h[3] = tonumber(string.sub(hash, 24, 32), 16)
             for i=1, k do
-              redis.call('SETBIT', key, (h[i % 2] + i * h[2 + (((i + (i % 2)) % 4) / 2)]) % bits, 1)
+              redis.call('SETBIT', key, (h[i % 2] + i * h[2 + (((i + (i % 2)) % 4) / 2)]) % bits, set_value)
             end
           )
           

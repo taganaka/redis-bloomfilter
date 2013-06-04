@@ -19,6 +19,13 @@ class Redis
         end
       end
 
+      # Insert a new element
+      def remove(data) 
+        @redis.pipelined do
+          indexes_for(data) { |i| @redis.setbit @options[:key_name], i, 0 }
+        end
+      end
+
       # It checks if a key is part of the set
       def include?(key)
         indexes = []

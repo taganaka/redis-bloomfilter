@@ -8,6 +8,7 @@ class Redis
     end
 
     attr_reader :options
+    attr_reader :driver
 
     # Usage: Redis::Bloomfilter.new :size => 1000, :error_rate => 0.01
     # It creates a bloomfilter with a capacity of 1000 items and an error rate of 1%
@@ -57,6 +58,10 @@ class Redis
     # It checks if a key is part of the set
     def include?(key)
       @driver.include?(key)
+    end
+
+    def remove(key)
+      @driver.remove key if @driver.respond_to? :remove
     end
 
     # It deletes a bloomfilter

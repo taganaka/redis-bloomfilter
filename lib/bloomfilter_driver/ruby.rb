@@ -31,6 +31,13 @@ class Redis
         !result.include?(0)
       end
 
+      # It removes an element from the filter
+      def remove(key)
+        @redis.pipelined do
+          indexes_for(key).each {|i| @redis.setbit @options[:key_name], i, 0}
+        end
+      end
+
       # It deletes a bloomfilter
       def clear
         @redis.del @options[:key_name]
