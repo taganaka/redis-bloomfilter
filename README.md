@@ -69,16 +69,17 @@ puts @bf.include?("bar") # => false
 Performance & Memory Usage
 -----------------
 ```
+---------------------------------------------
 Benchmarking lua driver with 1000000 items
               user     system      total        real
-insert:   36.590000  17.510000  54.100000 (191.411008)
-include?: 34.850000  16.520000  51.370000 (142.801983)
+insert:   38.620000  17.690000  56.310000 (160.377977)
+include?: 43.420000  20.600000  64.020000 (175.055146)
 
 ---------------------------------------------
 Benchmarking ruby driver with 1000000 items
               user     system      total        real
-insert:  101.630000  16.610000 118.240000 (164.792045)
-include?: 96.440000  28.710000 125.150000 (191.021710)
+insert:  125.910000  20.250000 146.160000 (195.973994)
+include?:121.230000  36.260000 157.490000 (231.360137)
 ```
 The lua version is about ~3 times faster than the pure-Ruby version
 
