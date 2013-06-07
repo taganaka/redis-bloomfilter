@@ -20,7 +20,7 @@ Drivers
 -----------------
 The library contains a set of different drivers.
   * A pure Ruby implementation
-  * A server-side version based on lua available for Redis v > 2.6
+  * A server-side version based on lua available for Redis v. >= 2.6
 
 How to use
 -----------------
@@ -80,9 +80,9 @@ Benchmarking ruby driver with 1000000 items
 insert:  101.630000  16.610000 118.240000 (164.792045)
 include?: 96.440000  28.710000 125.150000 (191.021710)
 ```
-The lua version is ~3 times faster than the pure-Ruby version
+The lua version is about ~3 times faster than the pure-Ruby version
 
-Lua code taken from https://github.com/ErikDubbelboer/redis-lua-scaling-bloom-filter
+Lua code is taken from https://github.com/ErikDubbelboer/redis-lua-scaling-bloom-filter
 
 1.000.000 ~= 1.5Mb occuped on Redis
 
