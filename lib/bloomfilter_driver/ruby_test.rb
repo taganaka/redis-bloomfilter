@@ -14,16 +14,12 @@ class Redis
 
       # Insert a new element
       def insert(data) 
-        @redis.pipelined do
-          indexes_for(data) { |i| @redis.setbit @options[:key_name], i, 1 }
-        end
+        set data, 1
       end
 
       # Insert a new element
       def remove(data) 
-        @redis.pipelined do
-          indexes_for(data) { |i| @redis.setbit @options[:key_name], i, 0 }
-        end
+        set data, 0
       end
 
       # It checks if a key is part of the set
@@ -64,6 +60,12 @@ class Redis
 
         def engine_sha1(data, i)
           Digest::SHA1.hexdigest("#{i}-#{data}").to_i(16) % @options[:bits]
+        end
+
+        def set(data, val)
+          @redis.pipelined do
+            indexes_for(data) { |i| @redis.setbit @options[:key_name], i, val }
+          end
         end
     end
   end
