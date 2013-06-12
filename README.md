@@ -85,7 +85,7 @@ The lua version is about ~3 times faster than the pure-Ruby version
 
 Lua code is taken from https://github.com/ErikDubbelboer/redis-lua-scaling-bloom-filter
 
-1.000.000 ~= 1.5Mb occuped on Redis
+1.000.000 ~= 1.5Mb occupied on Redis
 
 Contributing to redis-bloomfilter
 ----------------
