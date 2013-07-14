@@ -25,5 +25,6 @@ Gem::Specification.new do |s|
   s.add_dependency "redis", "~> 3.0.4"
 
   s.add_development_dependency "rspec"
+  s.add_development_dependency "flexmock"
 
 end

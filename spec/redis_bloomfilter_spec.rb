@@ -32,6 +32,21 @@ describe Redis::Bloomfilter do
     expect { Redis::Bloomfilter.new :size => 123,:error_rate => 0.01, :driver => 'bibu' }.to raise_error(NameError)
   end
 
+  it 'should choose the right driver based on the Redis version' do
+    
+    redis_mock = flexmock("redis")
+    redis_mock.should_receive(:info).and_return({'redis_version' => '2.6.0'})
+    redis_mock.should_receive(:script).and_return([true, true])
+    redis_mock_2_5 = flexmock("redis_2_5")
+    redis_mock_2_5.should_receive(:info).and_return({'redis_version' => '2.5.0'})
+
+    bf = factory({:size => 1000, :error_rate => 0.01, :key_name => 'ossom', :redis => redis_mock}, nil)
+    bf.driver.should be_kind_of(Redis::BloomfilterDriver::Lua)
+
+    bf = factory({:size => 1000, :error_rate => 0.01, :key_name => 'ossom', :redis => redis_mock_2_5}, nil)
+    bf.driver.should be_kind_of(Redis::BloomfilterDriver::Ruby)
+  end
+
   it 'should create a Redis::Bloomfilter object' do
     bf = factory({:size => 1000, :error_rate => 0.01, :key_name => 'ossom'}, 'ruby')
     bf.should be
@@ -70,6 +85,15 @@ describe Redis::Bloomfilter do
       bf.include?("asdlolol").should be false
       
     end
+  end
+
+  it 'should be a scalable bloom filter' do
+    bf = factory({:size => 10, :error_rate => 0.01, :key_name => '__test_bf'},'lua')
+    bf.clear
+    e = test_error_rate(bf, 1000)
+    e.should be < bf.options[:error_rate]
+    bf.clear
+    
   end
 
 end

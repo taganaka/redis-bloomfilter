@@ -1,7 +1,7 @@
 class Redis
   class Bloomfilter
 
-    VERSION = "0.0.1"
+    VERSION = "0.0.2"
 
     def self.version
       "redis-bloomfilter version #{VERSION}"
@@ -19,7 +19,7 @@ class Redis
         :key_name     => 'redis-bloomfilter',
         :hash_engine  => 'md5',
         :redis        => Redis.current,
-        :driver       => 'ruby'
+        :driver       => nil
       }.merge options
 
       raise ArgumentError, "options[:size] && options[:error_rate] cannot be nil" if options[:error_rate].nil? || options[:size].nil?
@@ -33,6 +33,17 @@ class Redis
 
       @redis = @options[:redis] || Redis.current
       @options[:hash_engine] = options[:hash_engine] if options[:hash_engine]
+
+      if @options[:driver].nil?
+        ver = @redis.info['redis_version']
+
+        if Gem::Version.new(ver) >= Gem::Version.new('2.6.0')
+          @options[:driver] = 'lua'
+        else
+          @options[:driver] = 'ruby'
+        end
+      end
+
       driver_class = Redis::BloomfilterDriver.const_get(driver_name)
       @driver = driver_class.new @options
       @driver.redis = @redis 
