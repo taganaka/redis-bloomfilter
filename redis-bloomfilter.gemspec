@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
     Adds Redis::Bloomfilter class which can be used as ditributed bloom filter implementation on Redis.
     A Bloom filter is a space-efficient probabilistic data structure that is used to test whether an element is a member of a set.
   }
-  s.licences = ['MIT']
+  s.licenses = ['MIT']
   s.rubyforge_project = "redis-bloomfilter"
 
   s.files         = `git ls-files`.split("\n")
