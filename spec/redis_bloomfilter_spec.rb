@@ -57,7 +57,7 @@ describe Redis::Bloomfilter do
     bf.clear
   end
 
-  %w(ruby lua ruby-test).each do |driver|
+  %w(ruby lua).each do |driver|
     it 'should work' do
       bf = factory({:size => 1000, :error_rate => 0.01, :key_name => '__test_bf'},driver)
       bf.clear
@@ -72,7 +72,7 @@ describe Redis::Bloomfilter do
       bf = factory({:size => 100, :error_rate => 0.01, :key_name => '__test_bf'},driver)
       bf.clear
       e = test_error_rate bf, 180
-      e.should be < bf.options[:error_rate]
+      e.should be <= bf.options[:error_rate]
       bf.clear
     end
 
@@ -87,13 +87,15 @@ describe Redis::Bloomfilter do
     end
   end
 
-  it 'should be a scalable bloom filter' do
-    bf = factory({:size => 10, :error_rate => 0.01, :key_name => '__test_bf'},'lua')
-    bf.clear
-    e = test_error_rate(bf, 1000)
-    e.should be < bf.options[:error_rate]
-    bf.clear
-    
+  %w(ruby lua).each do |driver|
+    it 'should be a scalable bloom filter' do
+      bf = factory({:size => 10, :error_rate => 0.01, :key_name => '__test_bf'},driver)
+      bf.clear
+      e = test_error_rate(bf, 1000)
+      e.should be <= bf.options[:error_rate]
+      bf.clear
+      
+    end
   end
 
 end
