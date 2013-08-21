@@ -71,6 +71,7 @@ class Redis
       @driver.include?(key)
     end
 
+    # It removes a key
     def remove(key)
       @driver.remove key if @driver.respond_to? :remove
     end
@@ -78,6 +79,11 @@ class Redis
     # It deletes a bloomfilter
     def clear
       @driver.clear
+    end
+
+    # It returns the total number of elements added
+    def count
+      @driver.respond_to?(:count) ? @driver.count : nil
     end
 
     protected
