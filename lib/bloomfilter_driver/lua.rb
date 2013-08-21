@@ -33,6 +33,10 @@ class Redis
         @redis.keys("#{@options[:key_name]}:*").each {|k|@redis.del k}    
       end
 
+      def count
+        @redis.get("#{@options[:key_name]}:count").to_i || 0
+      end
+
       protected
         # It loads the script inside Redis
         # Taken from https://github.com/ErikDubbelboer/redis-lua-scaling-bloom-filter

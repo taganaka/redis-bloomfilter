@@ -98,4 +98,18 @@ describe Redis::Bloomfilter do
     end
   end
 
+  %w(ruby lua).each do |driver|
+    it 'should track the count of the items added' do
+      bf = factory({:size => 100, :error_rate => 0.01, :key_name => '__test_bf'},driver)
+      bf.clear
+      bf.count.should be == 0
+      bf.insert("asdlol")
+      bf.count.should be == 1
+      bf.insert("asdlol")
+      bf.count.should be == 2
+      bf.clear
+      
+    end
+  end
+
 end

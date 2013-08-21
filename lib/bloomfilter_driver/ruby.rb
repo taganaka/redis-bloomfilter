@@ -36,7 +36,12 @@ class Redis
 
       # It deletes a bloomfilter
       def clear
+        @redis.keys("#{@options[:key_name]}:*").each {|k|@redis.del k}
         @redis.del @options[:key_name]
+      end
+
+      def count
+        @redis.get("#{@options[:key_name]}:count").to_i || 0
       end
 
       protected
@@ -60,6 +65,7 @@ class Redis
 
         def set(key, val)
           @redis.pipelined do
+            @redis.incr "#{@options[:key_name]}:count"
             indexes_for(key).each {|i| @redis.setbit @options[:key_name], i, val}
           end
         end
