@@ -2,7 +2,7 @@ redis-bloomfilter
 =============
 Requires the redis gem.
 
-Adds Redis::Bloomfilter class which can be used as ditributed bloom filter implementation on Redis.
+Adds Redis::Bloomfilter class which can be used as distributed bloom filter implementation on Redis.
 
 A Bloom filter is a space-efficient probabilistic data structure that is used to test whether an element is a member of a set.
 
