@@ -1,12 +1,6 @@
 class Redis
   class Bloomfilter
 
-    VERSION = "0.0.2"
-
-    def self.version
-      "redis-bloomfilter version #{VERSION}"
-    end
-
     attr_reader :options
     attr_reader :driver
 
