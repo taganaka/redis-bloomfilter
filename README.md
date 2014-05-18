@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/taganaka/redis-bloomfilter.svg?branch=master)](https://travis-ci.org/taganaka/redis-bloomfilter)
+
 redis-bloomfilter
 =============
 Requires the redis gem.
