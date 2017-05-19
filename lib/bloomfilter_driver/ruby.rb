@@ -41,7 +41,7 @@ class Redis
 
       protected
         # Hashing strategy: 
-        # http://www.eecs.harvard.edu/~kirsch/pubs/bbbf/esa06.pdf
+        # https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf
         def indexes_for data
           sha = Digest::SHA1.hexdigest(data.to_s)
           h = []
