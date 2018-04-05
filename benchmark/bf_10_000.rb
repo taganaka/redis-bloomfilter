@@ -1,11 +1,13 @@
-$:.push File.expand_path("../lib", __FILE__)
-require "redis-bloomfilter"
-require "benchmark"
-require "set"
+# frozen_string_literal: true
+
+$LOAD_PATH.push File.expand_path('../lib', __FILE__)
+require 'redis-bloomfilter'
+require 'benchmark'
+require 'set'
 
 def rand_word(length = 8)
   @charset ||= ('a'..'z').to_a
-  @charset.shuffle.first(length).join
+  @charset.sample(length).join
 end
 
 items = ARGV[0].nil? ? 10_000 : ARGV[0].to_i
@@ -16,10 +18,10 @@ error_rate = 0.01
 
   bf = Redis::Bloomfilter.new(
     {
-      :size       => items, 
-      :error_rate => error_rate, 
-      :key_name   => "bloom-filter-bench-#{driver}",
-      :driver     => driver
+      size: items,
+      error_rate: error_rate,
+      key_name: "bloom-filter-bench-#{driver}",
+      driver: driver
     }
   )
   bf.clear
@@ -27,7 +29,7 @@ error_rate = 0.01
   first_error_at = 0
   visited = Set.new
 
-  Benchmark.bm(7) do |x| 
+  Benchmark.bm(7) do |x|
     x.report do
       items.times do |i|
         item = rand_word
@@ -38,7 +40,7 @@ error_rate = 0.01
         end
         visited << item
         bf.insert item
-        #print ".(#{"%.1f" % ((i.to_f/items.to_f) * 100)}%) " if i % 1000 == 0
+        # print ".(#{"%.1f" % ((i.to_f/items.to_f) * 100)}%) " if i % 1000 == 0
       end
     end
   end

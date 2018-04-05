@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Redis
   class Bloomfilter
-    VERSION = "0.0.3"
+    VERSION = '1.0.0'
     def self.version
       "redis-bloomfilter version #{VERSION}"
     end
