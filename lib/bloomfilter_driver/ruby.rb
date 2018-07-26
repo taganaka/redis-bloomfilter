@@ -13,7 +13,7 @@ class Redis
 
       # Insert a new element
       def insert(data)
-        set data, 1
+        set data
       end
 
       # It checks if a key is part of the set
@@ -54,9 +54,9 @@ class Redis
         idxs
       end
 
-      def set(key, val)
+      def set(key)
         @redis.pipelined do
-          indexes_for(key).each { |i| @redis.setbit @options[:key_name], i, val }
+          indexes_for(key).each { |i| @redis.setbit @options[:key_name], i, 1 }
         end
       end
     end
